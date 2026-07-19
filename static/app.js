@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         map = L.map('farm-map', {
             zoomControl: true,
             scrollWheelZoom: true,
+            doubleClickZoom: false,
             layers: [satelliteMap]
         }).setView([lat, lon], 16);
         
@@ -149,6 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: dotIcon,
             draggable: true
         }).addTo(map);
+        
+        // Prevent clicking or dragging a marker from adding new points to the map on touchscreens
+        marker.on('click dblclick mousedown touchstart', (e) => {
+            if (e.originalEvent) {
+                e.originalEvent.stopPropagation();
+            }
+        });
         
         const markerIndex = boundaryPoints.length - 1;
         

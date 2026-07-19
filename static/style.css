@@ -1009,78 +1009,134 @@ html.mobile-map-only,
     border-radius: 0 !important;
 }
 
+/* Floating Bottom Control Card */
 .mobile-map-only .card-header.map-header-row {
     position: absolute !important;
-    top: 12px !important;
+    bottom: 20px !important;
+    top: auto !important;
     left: 12px !important;
     right: 12px !important;
     z-index: 1000 !important;
-    flex-direction: row !important;
-    align-items: center !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
     gap: 8px !important;
-    padding: 10px 12px !important;
-    background: rgba(18, 30, 18, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    padding: 12px 14px !important;
+    background: rgba(18, 30, 18, 0.88) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
 }
 
 .mobile-map-only .map-header-row > div:first-child {
-    display: none !important; /* Hide verbose title/subtitle on mobile webview */
+    display: block !important;
+}
+
+.mobile-map-only .card-header.map-header-row .card-title {
+    display: none !important;
+}
+
+.mobile-map-only .card-header.map-header-row .card-subtitle {
+    display: block !important;
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    margin: 0 0 6px 0 !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
 }
 
 .mobile-map-only .map-btn-group {
     width: 100% !important;
     display: flex !important;
     flex-direction: row !important;
-    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     align-items: center !important;
     gap: 8px !important;
 }
 
 .mobile-map-only .map-btn {
-    flex: 1 !important;
+    flex: 1 1 auto !important;
     justify-content: center !important;
-    padding: 10px 12px !important;
+    padding: 10px 14px !important;
     font-size: 0.8rem !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 }
 
 .mobile-map-only .map-btn.btn-clear {
-    background: rgba(239, 68, 68, 0.25) !important;
+    background: rgba(239, 68, 68, 0.22) !important;
     color: #fca5a5 !important;
     border: 1px solid rgba(239, 68, 68, 0.4) !important;
 }
 
 .mobile-map-only .map-btn.btn-save {
-    background: rgba(16, 185, 129, 0.25) !important;
+    background: rgba(16, 185, 129, 0.22) !important;
     color: #a7f3d0 !important;
     border: 1px solid rgba(16, 185, 129, 0.4) !important;
 }
 
+/* Floating Round GPS Locate Button */
 .mobile-map-only .map-btn.btn-gps {
-    background: rgba(59, 130, 246, 0.25) !important;
-    color: #93c5fd !important;
-    border: 1px solid rgba(59, 130, 246, 0.4) !important;
-    flex: 0 0 44px !important;
+    position: fixed !important;
+    bottom: 145px !important;
+    right: 16px !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 24px !important;
+    background: rgba(18, 30, 18, 0.88) !important;
+    color: #3b82f6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1001 !important;
+    padding: 0 !important;
+    flex: 0 0 48px !important;
+}
+
+.mobile-map-only .map-btn.btn-gps i {
+    font-size: 1.15rem !important;
 }
 
 .mobile-map-only #input-save-field-name {
-    flex: 1.5 !important;
+    width: 100% !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: #fff !important;
     padding: 8px 12px !important;
     border-radius: 8px !important;
     font-size: 0.8rem !important;
+    text-align: center !important;
 }
 
-.mobile-map-only .leaflet-top.leaflet-left,
+/* Custom restyling for Leaflet controls on Mobile */
 .mobile-map-only .leaflet-top.leaflet-right {
-    top: 75px !important;
+    top: 12px !important;
+    right: 12px !important;
+}
+
+.mobile-map-only .leaflet-control-zoom,
+.mobile-map-only .leaflet-control-attribution {
+    display: none !important;
+}
+
+.mobile-map-only .leaflet-control-layers {
+    background: rgba(18, 30, 18, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    color: #fff !important;
+}
+
+.mobile-map-only .leaflet-control-layers-toggle {
+    background-size: 20px 20px !important;
+    width: 36px !important;
+    height: 36px !important;
 }
 
 /* Beautiful map actions buttons & floating GPS controls */
