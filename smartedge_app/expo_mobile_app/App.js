@@ -11,7 +11,9 @@ import {
   TextInput,
   ActivityIndicator,
   Image,
-  Dimensions
+  Dimensions,
+  Platform,
+  StatusBar as RNStatusBar
 } from 'react-native';
 import { 
   MaterialCommunityIcons, 
@@ -1436,6 +1438,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight : 0,
   },
   header: {
     height: 70,
