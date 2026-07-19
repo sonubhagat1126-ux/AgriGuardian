@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             zoomControl: true,
             scrollWheelZoom: true,
             doubleClickZoom: false,
+            tap: false,
             layers: [satelliteMap]
         }).setView([lat, lon], 16);
         
