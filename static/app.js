@@ -1106,6 +1106,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Auto-activate satellite map tab if in mobile-map-only mode
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('mode') === 'map') {
+        const mapMenuItem = document.querySelector('.nav-menu-item[data-tab="satellite-map"]');
+        if (mapMenuItem) {
+            mapMenuItem.classList.add('active');
+        }
+        tabPanels.forEach(panel => {
+            panel.classList.remove('active');
+            if (panel.id === 'panel-satellite-map') {
+                panel.classList.add('active');
+            }
+        });
+        
+        // Hide other items in navigation menu
+        menuItems.forEach(mi => {
+            if (mi !== mapMenuItem) {
+                mi.classList.remove('active');
+            }
+        });
+
+        // Initialize map immediately with default/cached coords so it loads before first WebSocket message
+        initMap(28.5355, 77.3910);
+        setTimeout(() => {
+            if (map) map.invalidateSize();
+        }, 300);
+    }
+
     // AI Crop Doctor Drag and Drop / Upload Logic
     const leafDropZone = document.getElementById('leaf-drop-zone');
     const leafImageInput = document.getElementById('leaf-image-input');

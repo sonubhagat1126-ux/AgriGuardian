@@ -933,57 +933,82 @@ input:checked + .slider-toggle-round:before {
 }
 
 /* Embedded mobile map-only dashboard styles */
-.mobile-map-only header,
-.mobile-map-only .sensor-section,
-.mobile-map-only .control-section:not(.map-section),
-.mobile-map-only .chart-section,
-.mobile-map-only #card-field-manager,
-.mobile-map-only #card-pump-control,
+.mobile-map-only .nav-sidebar,
+.mobile-map-only .app-header,
 .mobile-map-only .background-decorations {
     display: none !important;
 }
 
-.mobile-map-only .app-container {
-    padding: 5px !important;
+.mobile-map-only .app-sidebar-layout {
+    display: block !important;
+    padding: 0 !important;
     margin: 0 !important;
-    max-width: 100% !important;
+    height: 100vh !important;
+    width: 100vw !important;
 }
 
-.mobile-map-only .dashboard-grid {
+.mobile-map-only .main-content-wrapper {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+}
+
+.mobile-map-only .tab-panel {
+    display: none !important;
+}
+
+.mobile-map-only .tab-panel#panel-satellite-map {
+    display: block !important;
+    height: 100vh !important;
+}
+
+.mobile-map-only .map-container-full {
+    height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.mobile-map-only .map-card-full-screen {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #121A12 !important; /* Matches app background */
+    height: 100vh !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 0 !important;
     margin: 0 !important;
-    gap: 8px !important;
+    padding: 0 !important;
 }
 
-.mobile-map-only .map-section {
-    grid-column: span 12 !important;
-    margin: 0 !important;
+.mobile-map-only .map-body-full {
+    flex: 1 !important;
     padding: 0 !important;
+    margin: 0 !important;
+    height: calc(100vh - 65px) !important;
 }
 
 .mobile-map-only #farm-map {
-    height: 380px !important;
-}
-
-.mobile-map-only .card-satellite {
-    grid-column: span 12 !important;
-    margin: 0 !important;
-    padding: 15px !important;
-    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    border-radius: 0 !important;
 }
 
 .mobile-map-only body {
-    padding: 5px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     background: #121A12 !important; /* Matches React Native app background */
+    overflow: hidden !important;
 }
 
 .mobile-map-only .card-header.map-header-row {
-    flex-direction: column !important;
-    align-items: stretch !important;
+    flex-direction: row !important;
+    align-items: center !important;
     gap: 8px !important;
-    padding: 8px 10px !important;
+    padding: 10px !important;
+    background: rgba(30, 41, 59, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 .mobile-map-only .map-header-row > div:first-child {
