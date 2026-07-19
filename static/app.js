@@ -807,8 +807,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // ONLY clear and redraw boundaries if the active field plot selector changes
-            if (data.selected_field !== lastSelectedField) {
+            // Check if custom boundary changed in real-time (e.g., node added via phone app)
+            let customBoundaryChanged = false;
+            if (data.selected_field === 'custom' && data.custom_boundary) {
+                if (data.custom_boundary.length !== boundaryPoints.length) {
+                    customBoundaryChanged = true;
+                } else {
+                    for (let i = 0; i < data.custom_boundary.length; i++) {
+                        if (data.custom_boundary[i][0] !== boundaryPoints[i][0] || 
+                            data.custom_boundary[i][1] !== boundaryPoints[i][1]) {
+                            customBoundaryChanged = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // ONLY clear and redraw boundaries if the active field plot selector changes OR boundary changes
+            if (data.selected_field !== lastSelectedField || customBoundaryChanged) {
                 lastSelectedField = data.selected_field;
                 
                 clearBoundary(false);
