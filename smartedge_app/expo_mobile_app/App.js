@@ -918,14 +918,10 @@ export default function App() {
     if (!host.includes(':')) {
       host = `${host}:8000`; // append port if not present
     }
-    const mapUrl = `http://${host}/?mode=map&v=12`;
+    const mapUrl = `http://${host}/?mode=map&v=13`;
     
     return (
       <View style={{ flex: 1, backgroundColor: Colors.background }}>
-        <View style={styles.mapTabHeader}>
-          <Text style={styles.tabHeading}>ISRO VEDAS Field Map</Text>
-          <Text style={styles.mapSubheading}>Tap points to draw your farm and monitor NDVI</Text>
-        </View>
         <WebView 
           key={mapUrl} // Forces React to recreate the WebView if IP or URL changes
           source={{ uri: mapUrl }}

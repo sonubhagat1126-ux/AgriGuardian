@@ -977,6 +977,7 @@ input:checked + .slider-toggle-round:before {
     height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    position: relative !important;
 }
 
 .mobile-map-only .map-card-full-screen {
@@ -985,17 +986,21 @@ input:checked + .slider-toggle-round:before {
     box-shadow: none !important;
     background: #121A12 !important; /* Matches app background */
     height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
+    position: relative !important;
+    display: block !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
 .mobile-map-only .map-body-full {
-    flex: 1 !important;
     padding: 0 !important;
     margin: 0 !important;
     height: 100% !important;
+    width: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1 !important;
 }
 
 .mobile-map-only #farm-map {
@@ -1005,13 +1010,21 @@ input:checked + .slider-toggle-round:before {
 }
 
 .mobile-map-only .card-header.map-header-row {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    z-index: 1000 !important;
     flex-direction: row !important;
     align-items: center !important;
     gap: 8px !important;
-    padding: 10px !important;
-    background: rgba(30, 41, 59, 0.4) !important;
-    backdrop-filter: blur(10px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 10px 12px !important;
+    background: rgba(18, 30, 18, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
 .mobile-map-only .map-header-row > div:first-child {
@@ -1020,19 +1033,54 @@ input:checked + .slider-toggle-round:before {
 
 .mobile-map-only .map-btn-group {
     width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
     justify-content: space-between !important;
-    gap: 6px !important;
+    align-items: center !important;
+    gap: 8px !important;
 }
 
 .mobile-map-only .map-btn {
     flex: 1 !important;
     justify-content: center !important;
-    padding: 8px 10px !important;
-    font-size: 0.75rem !important;
+    padding: 10px 12px !important;
+    font-size: 0.8rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mobile-map-only .map-btn.btn-clear {
+    background: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}
+
+.mobile-map-only .map-btn.btn-save {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #a7f3d0 !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+.mobile-map-only .map-btn.btn-gps {
+    background: rgba(59, 130, 246, 0.25) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    flex: 0 0 44px !important;
 }
 
 .mobile-map-only #input-save-field-name {
     flex: 1.5 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.8rem !important;
+}
+
+.mobile-map-only .leaflet-top.leaflet-left,
+.mobile-map-only .leaflet-top.leaflet-right {
+    top: 75px !important;
 }
 
 /* Beautiful map actions buttons & floating GPS controls */
