@@ -9,35 +9,35 @@
 }
 
 :root {
-    /* Colors - Clean Warm Light Theme */
-    --bg-primary: #f5f7f9;        /* Soft warm slate */
-    --bg-secondary: #ffffff;      /* Pure White */
-    --text-primary: #0f172a;      /* Deep Charcoal */
-    --text-secondary: #566474;    /* Cool Grey */
+    /* Colors - Modern Pristine Minimalist SaaS Theme */
+    --bg-primary: #f8fafc;        /* Slate 50 - clean cool white background */
+    --bg-secondary: #ffffff;      /* Pure solid white cards */
+    --text-primary: #0f172a;      /* Slate 900 - dark charcoal text */
+    --text-secondary: #475569;    /* Slate 600 - cool grey subtext */
     
-    /* Soft Glows for Light Mode */
-    --accent-soil: #0284c7;       /* Blue */
-    --accent-soil-glow: rgba(2, 132, 199, 0.06);
+    /* Elegant Accents */
+    --accent-soil: #0284c7;       /* Sky 600 - Soil blue */
+    --accent-soil-glow: rgba(2, 132, 199, 0.05);
     
-    --accent-temp: #e11d48;       /* Warm Red */
-    --accent-temp-glow: rgba(225, 29, 72, 0.06);
+    --accent-temp: #e11d48;       /* Rose 600 - Temperature red */
+    --accent-temp-glow: rgba(225, 29, 72, 0.05);
     
-    --accent-humidity: #4f46e5;   /* Indigo */
-    --accent-humidity-glow: rgba(79, 70, 229, 0.06);
+    --accent-humidity: #4f46e5;   /* Indigo 600 - Humidity indigo */
+    --accent-humidity-glow: rgba(79, 70, 229, 0.05);
     
-    --accent-pump: #10b981;       /* Emerald */
-    --accent-pump-glow: rgba(16, 185, 129, 0.06);
+    --accent-pump: #10b981;       /* Emerald 500 - Pump green */
+    --accent-pump-glow: rgba(16, 185, 129, 0.05);
     
-    --accent-sat: #7c3aed;        /* Violet */
-    --accent-sat-glow: rgba(124, 58, 237, 0.06);
+    --accent-sat: #7c3aed;        /* Violet 600 - Satellite purple */
+    --accent-sat-glow: rgba(124, 58, 237, 0.05);
 
-    --accent-warning: #d97706;    /* Amber */
+    --accent-warning: #d97706;    /* Amber 600 - Warnings amber */
     
-    /* Glassmorphism settings - Optimized for Light Mode (Lite UI) */
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(15, 23, 42, 0.08);
-    --glass-shadow: 0 10px 30px rgba(15, 23, 42, 0.03), 0 1px 3px rgba(15, 23, 42, 0.01);
-    --glass-blur: blur(20px);
+    /* Clean Minimalist Shadow & Borders (No heavy glass effects needed) */
+    --glass-bg: #ffffff;
+    --glass-border: #e2e8f0;       /* Slate 200 - thin slate borders */
+    --glass-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
+    --glass-blur: none;            /* Crisp solid layout */
 }
 
 body {
@@ -274,22 +274,21 @@ body {
     }
 }
 
-/* Glassmorphism Card Style */
+/* Minimalist SaaS Card Style */
 .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
+    border-radius: 12px;
     box-shadow: var(--glass-shadow);
     padding: 1.8rem;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.2s ease-in-out;
     overflow: hidden;
 }
 
 .glass-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    border-color: #cbd5e1; /* Slate 300 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.04);
 }
 
 /* Card Header */
@@ -1157,9 +1156,11 @@ input:checked + .slider-toggle-round:before {
 
 .nav-menu-item.active {
     color: var(--text-primary);
-    background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(56, 189, 248, 0.15));
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    box-shadow: 0 4px 20px rgba(52, 211, 153, 0.1);
+    background: #f1f5f9; /* Slate 100 */
+    border: 1px solid #cbd5e1; /* Slate 300 */
+    border-left: 4px solid var(--accent-pump) !important;
+    box-shadow: none;
+    font-weight: 600;
 }
 
 .nav-menu-item.active i {
