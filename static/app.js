@@ -854,8 +854,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // ONLY clear and redraw boundaries if the active field plot selector changes OR boundary changes
-            if (data.selected_field !== lastSelectedField || customBoundaryChanged) {
+            // ONLY clear and redraw boundaries if the active field plot selector changes.
+            // If already on 'custom', keep the local client editing state as the source of truth
+            // and ignore server-echoed custom boundary updates to prevent lag/flashing loops.
+            if (data.selected_field !== lastSelectedField || (lastSelectedField !== 'custom' && customBoundaryChanged)) {
                 lastSelectedField = data.selected_field;
                 
                 clearBoundary(false);
