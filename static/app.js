@@ -225,8 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const centroid = getCentroid(boundaryPoints);
                 inputLat.value = centroid.lat.toFixed(4);
                 inputLon.value = centroid.lon.toFixed(4);
-                sendControlCommand('set_field', { field: 'custom', lat: centroid.lat, lon: centroid.lon });
-                sendControlCommand('set_boundary', { boundary: boundaryPoints });
+                sendControlCommand('set_boundary', { 
+                    boundary: boundaryPoints, 
+                    lat: centroid.lat, 
+                    lon: centroid.lon 
+                });
             }
         }
     }

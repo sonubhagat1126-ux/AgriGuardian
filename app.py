@@ -357,6 +357,13 @@ async def websocket_endpoint(websocket: WebSocket):
                         threading.Thread(target=fetch_vedas_data, args=(latest_data["latitude"], latest_data["longitude"]), daemon=True).start()
                 elif action == "set_boundary":
                     latest_data["custom_boundary"] = value.get("boundary", [])
+                    lat = value.get("lat")
+                    lon = value.get("lon")
+                    if lat is not None and lon is not None:
+                        latest_data["selected_field"] = "custom"
+                        latest_data["latitude"] = float(lat)
+                        latest_data["longitude"] = float(lon)
+                        threading.Thread(target=fetch_vedas_data, args=(latest_data["latitude"], latest_data["longitude"]), daemon=True).start()
                 elif action == "save_field_plot":
                     name = value.get("name", "Field")
                     crop = value.get("crop", "tomato")
