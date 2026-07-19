@@ -1,0 +1,23 @@
+# SmartEdge AgriGuardian — Arduino UNO Q Backend
+# Phase 1: Flask + CORS only (no bridge dependencies yet)
+#
+# Install:   pip install -r requirements.txt
+# On board:  pip3 install -r requirements.txt
+
+flask==3.0.3
+flask-cors==4.0.1
+
+# ── Phase 2 additions (uncomment when Arduino Bridge integration begins) ──────
+msgpack==1.0.8    # MessagePack-RPC for arduino-router communication
+# psutil==6.0.0     ← CPU / memory stats for /status (optional)
+
+# Image processing for TFLite/YOLO models
+numpy>=1.20.0
+Pillow>=9.0.0
+
+# ── Phase 5 additions: YOLO11 Classification Model ────────────────────────────
+ultralytics>=8.0.0    # YOLO11 Classification training and CPU export
+onnx>=1.14.0          # ONNX model format support
+onnxruntime>=1.15.0   # High-performance ONNX CPU inference
+
+

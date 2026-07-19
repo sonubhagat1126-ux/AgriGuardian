@@ -1,0 +1,25 @@
+# Raw image datasets and partition caches
+PlantVillage/
+PlantVillage_YOLO/
+PlantVillage_subset/
+arduino_backend/modules/leaf_detection/PlantVillage_YOLO/
+arduino_backend/modules/leaf_detection/PlantVillage_subset/
+
+# Training runs output logs & checkpoints cache
+runs/
+.ultralytics/
+
+# Python cache & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# OS / IDE temp files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

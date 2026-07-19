@@ -1,0 +1,37 @@
+# Node dependencies
+node_modules/
+.expo/
+dist/
+web-build/
+
+# Python caching & environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Large Binary Files
+*.zip
+*.tar.gz
+*.rar
+
+# Task log files & AI workspace config
+*.log
+.gemini/
+.system_generated/
+.tempmediaStorage/
+.agents/
+walkthrough.md
+task.md
+implementation_plan.md
+
+# IDE configs
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

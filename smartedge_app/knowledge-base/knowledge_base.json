@@ -1,0 +1,266 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-07-14",
+  "crops_supported": ["aaloo", "potato", "tomato", "rice", "wheat", "onion", "chilli", "brinjal", "all"],
+
+  "problems": [
+    {
+      "id": "early_blight",
+      "name": "Early Blight",
+      "keywords": ["safed daag", "white spot", "daag", "early blight", "patte pe daag", "brown ring spot", "target spot"],
+      "crops": ["aaloo", "potato", "tomato"],
+      "solution": {
+        "organic": "Neem oil ya Garlic-Chilli spray (7 din mein 2 baar)",
+        "chemical": "Mancozeb ya Copper Oxychloride fungicide (as per label dose)",
+        "water": "Paani kam karo, leaves ko dry rakhna zaroori hai",
+        "other": "Affected leaves turant nikaal do aur jala do, khet ke bahar phenko"
+      },
+      "prevention": "Subah paani do (evening avoid karo), faslon ke beech proper distance rakho, crop rotation follow karo",
+      "severity": "medium"
+    },
+    {
+      "id": "late_blight",
+      "name": "Late Blight",
+      "keywords": ["kaale daag", "black spot", "late blight", "patte sad rahe", "gale hue patte", "water soaked spot"],
+      "crops": ["aaloo", "potato", "tomato"],
+      "solution": {
+        "organic": "Copper-based organic fungicide spray",
+        "chemical": "Metalaxyl + Mancozeb combination spray, 7-10 din mein",
+        "water": "Overhead irrigation avoid karo, drip irrigation better hai",
+        "other": "Severely affected plants ko turant hata do, yeh bahut fast phailta hai"
+      },
+      "prevention": "Humid weather mein extra alert raho, proper spacing rakho",
+      "severity": "high"
+    },
+    {
+      "id": "leaf_spot",
+      "name": "Leaf Spot / Bacterial Spot",
+      "keywords": ["brown spot", "black spot chhote", "leaf spot", "patto pe chhote dhabbe"],
+      "crops": ["aaloo", "tomato", "rice", "chilli"],
+      "solution": {
+        "organic": "Neem oil spray, 5-7 din mein",
+        "chemical": "Carbendazim ya Copper Oxychloride",
+        "water": "Paani upar se mat do, drip irrigation best hai"
+      },
+      "prevention": "Seed treatment karo lagane se pehle, saaf beej use karo",
+      "severity": "low"
+    },
+    {
+      "id": "powdery_mildew",
+      "name": "Powdery Mildew",
+      "keywords": ["safed powder", "white powder", "fungus patto pe", "powdery mildew"],
+      "crops": ["tomato", "chilli", "brinjal"],
+      "solution": {
+        "organic": "Milk spray (1:9 water ratio) ya Neem oil",
+        "chemical": "Sulphur-based fungicide spray",
+        "water": "Normal watering theek hai, sirf overhead spray avoid karo"
+      },
+      "prevention": "Achhi sunlight aur air circulation rakho, overcrowding avoid karo",
+      "severity": "medium"
+    },
+    {
+      "id": "yellowing_leaves",
+      "name": "Yellowing of Leaves (Nitrogen Deficiency)",
+      "keywords": ["patte pile", "yellow leaves", "peela patta", "nitrogen kami"],
+      "crops": ["all"],
+      "solution": {
+        "organic": "Vermicompost ya cow dung manure daalo",
+        "chemical": "Urea 20-25 kg/acre split doses mein",
+        "other": "Overwatering check karo, root rot bhi wajah ho sakta hai"
+      },
+      "prevention": "Balanced fertilizer schedule follow karo",
+      "severity": "medium"
+    },
+    {
+      "id": "wilting",
+      "name": "Wilting / Murjhana",
+      "keywords": ["murjha raha hai", "wilting", "patte jhuk gaye", "plant sukh raha"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Pehle soil moisture check karo",
+        "if_low_moisture": "Turant halka irrigation do",
+        "if_normal_moisture": "Root fungal infection ho sakta hai, Carbendazim soil drench karo"
+      },
+      "prevention": "Overwatering aur underwatering dono avoid karo",
+      "severity": "high"
+    },
+    {
+      "id": "aphids",
+      "name": "Aphids / Chepa Attack",
+      "keywords": ["chepa", "aphids", "chhote kide", "green insects", "sticky leaves"],
+      "crops": ["all"],
+      "solution": {
+        "organic": "Neem oil + soap water spray har 3-4 din mein",
+        "chemical": "Imidacloprid spray (label dose follow karo)",
+        "other": "Ladybugs jaise natural predators encourage karo"
+      },
+      "prevention": "Regular field inspection karo, early detection zaroori hai",
+      "severity": "medium"
+    },
+    {
+      "id": "stem_borer",
+      "name": "Stem Borer",
+      "keywords": ["tana chhedak", "stem borer", "tana khokhla", "dead heart"],
+      "crops": ["rice", "wheat"],
+      "solution": {
+        "organic": "Trichogramma card use karo (biological control)",
+        "chemical": "Chlorantraniliprole spray as per recommendation",
+        "other": "Affected tillers ko cut karke nikaal do"
+      },
+      "prevention": "Resistant variety choose karo, timely sowing karo",
+      "severity": "high"
+    },
+    {
+      "id": "root_rot",
+      "name": "Root Rot",
+      "keywords": ["jad sadna", "root rot", "jad kamzor", "plant gir raha"],
+      "crops": ["all"],
+      "solution": {
+        "organic": "Trichoderma soil treatment",
+        "chemical": "Carbendazim soil drench",
+        "water": "Drainage improve karo, overwatering turant band karo"
+      },
+      "prevention": "Waterlogging avoid karo, raised beds use karo",
+      "severity": "high"
+    },
+    {
+      "id": "low_soil_moisture",
+      "name": "Low Soil Moisture",
+      "keywords": ["mitti dry", "paani kam", "sukhi mitti", "moisture low", "mitti sukh gayi"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Shaam ke time 10-15 minute irrigation karo",
+        "note": "Agar kal baarish ka forecast hai toh irrigation postpone karo"
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "high_soil_moisture",
+      "name": "Excess Soil Moisture / Waterlogging",
+      "keywords": ["zyada paani", "waterlogging", "khet mein paani bhara", "over irrigation"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Drainage channel banao, turant irrigation band karo",
+        "note": "Waterlogging se root rot aur fungal disease ka risk badh jaata hai"
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "high_temperature_stress",
+      "name": "Heat Stress",
+      "keywords": ["garmi zyada", "heat stress", "patte jhuls rahe", "temperature high"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Extra irrigation shaam ya subah ke time do",
+        "other": "Mulching karo taaki soil temperature control ho",
+        "note": "Peak afternoon mein spray/fertilizer avoid karo"
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "fruit_rot",
+      "name": "Fruit Rot",
+      "keywords": ["fal sad raha", "fruit rot", "tamatar sad raha", "phal pe daag"],
+      "crops": ["tomato", "brinjal", "chilli"],
+      "solution": {
+        "organic": "Copper-based organic fungicide",
+        "chemical": "Mancozeb spray",
+        "other": "Affected fruits turant hata do"
+      },
+      "prevention": "Proper spacing aur air circulation rakho",
+      "severity": "medium"
+    },
+    {
+      "id": "rice_blast",
+      "name": "Rice Blast",
+      "keywords": ["rice blast", "chawal patta daag", "diamond shape spot"],
+      "crops": ["rice"],
+      "solution": {
+        "organic": "Neem-based spray",
+        "chemical": "Tricyclazole spray as per recommendation",
+        "other": "Excess nitrogen avoid karo"
+      },
+      "prevention": "Resistant variety use karo, balanced fertilizer",
+      "severity": "high"
+    },
+    {
+      "id": "wheat_rust",
+      "name": "Wheat Rust",
+      "keywords": ["wheat rust", "gehu jang", "orange powder patto pe", "yellow rust"],
+      "crops": ["wheat"],
+      "solution": {
+        "organic": "Sulphur-based spray",
+        "chemical": "Propiconazole spray",
+        "other": "Timely sowing se risk kam hota hai"
+      },
+      "prevention": "Resistant variety choose karo",
+      "severity": "high"
+    },
+    {
+      "id": "onion_purple_blotch",
+      "name": "Purple Blotch (Onion)",
+      "keywords": ["pyaz daag", "purple blotch", "onion disease"],
+      "crops": ["onion"],
+      "solution": {
+        "organic": "Neem oil spray",
+        "chemical": "Mancozeb spray, 10 din interval mein",
+        "water": "Overhead irrigation avoid karo"
+      },
+      "prevention": "Crop rotation follow karo",
+      "severity": "medium"
+    },
+    {
+      "id": "nutrient_deficiency_general",
+      "name": "General Nutrient Deficiency",
+      "keywords": ["khad chahiye", "fertilizer kaunsa", "poshak tatva kami", "growth slow"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Soil test karwao agar possible ho",
+        "general": "Balanced NPK fertilizer use karo (ratio crop ke hisab se)",
+        "organic": "Vermicompost ya farmyard manure"
+      },
+      "severity": "low"
+    },
+    {
+      "id": "pest_general",
+      "name": "General Pest Attack",
+      "keywords": ["kide lag gaye", "pest attack", "insects", "keede"],
+      "crops": ["all"],
+      "solution": {
+        "organic": "Neem oil spray first line of defense",
+        "chemical": "Broad spectrum insecticide agar organic kaam na kare",
+        "other": "Pest ka photo lekar exact identification karo pehle"
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "seedling_damping_off",
+      "name": "Damping Off (Seedlings)",
+      "keywords": ["seedling mar rahe", "damping off", "chhote paudhe gir rahe"],
+      "crops": ["all"],
+      "solution": {
+        "organic": "Trichoderma seed treatment",
+        "chemical": "Captan ya Thiram seed treatment",
+        "water": "Nursery mein overwatering avoid karo"
+      },
+      "prevention": "Well-drained nursery bed banao",
+      "severity": "high"
+    },
+    {
+      "id": "healthy_crop",
+      "name": "Healthy Crop - No Issue Detected",
+      "keywords": ["sab theek", "healthy", "koi problem nahi", "achha lag raha"],
+      "crops": ["all"],
+      "solution": {
+        "action": "Current practices continue karo",
+        "tip": "Regular monitoring jaari rakho, preventive neem spray har 10-15 din mein kar sakte ho"
+      },
+      "severity": "none"
+    }
+  ],
+
+  "fallback": {
+    "message": "Iska exact match knowledge base mein nahi mila. Gemini AI se personalized response generate kiya ja raha hai.",
+    "action": "call_gemini_api"
+  }
+}
