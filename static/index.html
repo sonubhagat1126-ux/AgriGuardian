@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/static/leaflet.css" />
     <script src="/static/leaflet.js"></script>
     <!-- Custom Style -->
-    <link rel="stylesheet" href="/static/style.css?v=2">
+    <link rel="stylesheet" href="/static/style.css?v=3">
     <script>
         // Check if URL has ?mode=map (embedded mobile map mode)
         const urlParams = new URLSearchParams(window.location.search);
@@ -32,299 +32,444 @@
         <div class="blob blob-3"></div>
     </div>
 
-    <div class="app-container">
-        <!-- HEADER -->
-        <header class="app-header">
-            <div class="logo-area">
-                <div class="logo-icon-wrapper">
-                    <i class="fa-solid fa-seedling logo-icon"></i>
-                </div>
-                <div>
-                    <h1>AGRIGUARDIAN</h1>
-                    <p class="subtitle">Smart Environmental Automation Dashboard</p>
-                </div>
+    <!-- MAIN SIDEBAR WRAPPER -->
+    <div class="app-sidebar-layout">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="nav-sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-leaf brand-icon"></i>
+                <h2>AgriGuardian</h2>
             </div>
             
-            <div class="system-status-panel">
-                <!-- Status Badge -->
+            <nav class="sidebar-menu">
+                <button class="nav-menu-item active" data-tab="showcase">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Showcase Deck</span>
+                </button>
+                <button class="nav-menu-item" data-tab="control-room">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>IoT Control Room</span>
+                </button>
+                <button class="nav-menu-item" data-tab="satellite-map">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Satellite Map</span>
+                </button>
+                <button class="nav-menu-item" data-tab="crop-doctor">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <span>AI Crop Doctor</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
                 <div id="status-badge" class="status-badge status-offline">
                     <span class="pulse-dot"></span>
                     <span id="status-text">Connecting Server...</span>
                 </div>
-                <!-- COM Port info -->
                 <div class="port-info">
                     <i class="fa-solid fa-ethernet"></i>
-                    <span>COM3 @ 115200</span>
+                    <span id="com-port-info">COM8 @ 9600</span>
                 </div>
             </div>
-        </header>
+        </aside>
 
-        <!-- MAIN DASHBOARD CONTENT -->
-        <main class="dashboard-grid">
+        <!-- MAIN DYNAMIC CONTENT -->
+        <main class="main-content-wrapper">
             
-            <!-- SENSOR CARDS -->
-            <section class="sensor-section">
-                <!-- Card: Soil Moisture -->
-                <div class="dashboard-card glass-card card-soil" id="card-soil-moisture">
-                    <div class="card-header">
-                        <span class="card-title">Soil Moisture</span>
-                        <div class="icon-badge soil-icon-bg">
-                            <i class="fa-solid fa-droplet"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="metric-display">
-                            <span id="val-soil" class="metric-value">--</span>
-                            <span class="metric-unit">%</span>
-                            <span id="val-soil-raw" class="raw-metric-label">(Raw: --)</span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div id="progress-soil" class="progress-bar progress-soil-color" style="width: 0%"></div>
-                        </div>
-                        <p class="card-status-desc" id="soil-desc">Awaiting reading...</p>
-                    </div>
+            <!-- HEADER -->
+            <header class="app-header">
+                <div class="header-tab-title">
+                    <h1 id="active-tab-title">Project Showcase</h1>
+                    <p class="subtitle" id="active-tab-subtitle">Smart Environmental Automation & Precision Agriculture Dashboard</p>
                 </div>
+            </header>
 
-                <!-- Card: Temperature -->
-                <div class="dashboard-card glass-card card-temp" id="card-temperature">
-                    <div class="card-header">
-                        <span class="card-title">Temperature</span>
-                        <div class="icon-badge temp-icon-bg">
-                            <i class="fa-solid fa-temperature-half"></i>
+            <!-- PANEL 1: PROJECT SHOWCASE -->
+            <section class="tab-panel active" id="panel-showcase">
+                <div class="showcase-container">
+                    
+                    <!-- Showcase Banner -->
+                    <div class="showcase-hero-card glass-card">
+                        <div class="hero-text-area">
+                            <span class="pill-badge">Snapdragon Multiverse Hackathon Noida 2026</span>
+                            <h2>🌾 AgriGuardian</h2>
+                            <p>An edge-first, multi-device precision agriculture system designed to protect crops and optimize irrigation. Driven by local physical sensing, Qualcomm NPU acceleration (LiteRT + QNN), and macro-geospatial Earth Observation feeds (ISRO VEDAS).</p>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="metric-display">
-                            <span id="val-temp" class="metric-value">--</span>
-                            <span class="metric-unit">°C</span>
+
+                    <!-- Tech Pillars Grid -->
+                    <div class="showcase-pillars">
+                        
+                        <div class="showcase-card glass-card">
+                            <div class="card-icon-header core-green">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <h3>Qualcomm Edge AI</h3>
+                            <p>Runs MobileNetV2 leaf disease classifiers locally on the NPU via the LiteRT runtime, ensuring 100% offline, zero-latency diagnostics directly on-device.</p>
                         </div>
-                        <div class="progress-bar-container">
-                            <div id="progress-temp" class="progress-bar progress-temp-color" style="width: 0%"></div>
+
+                        <div class="showcase-card glass-card">
+                            <div class="card-icon-header core-blue">
+                                <i class="fa-solid fa-satellite"></i>
+                            </div>
+                            <h3>ISRO VEDAS Data Fusion</h3>
+                            <p>Queries regional Earth Observation grids to fetch live NDVI index, land surface temperature, and soil wetness profiles, matching micro-sensors to prevent over-irrigation.</p>
                         </div>
-                        <p class="card-status-desc" id="temp-desc">Awaiting reading...</p>
+
+                        <div class="showcase-card glass-card">
+                            <div class="card-icon-header core-orange">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <h3>Multi-Device Orchestration</h3>
+                            <p>Bridges real-time sensor streams from the STM32U585 MCU to the Dragonwing Linux MPU, syncing state controls instantly to the phone client over WebSockets.</p>
+                        </div>
+
                     </div>
+
+                    <!-- Flow Diagram Card -->
+                    <div class="dashboard-card glass-card diagram-card">
+                        <div class="card-header">
+                            <span class="card-title">System Interconnection Layout</span>
+                        </div>
+                        <div class="card-body diagram-body">
+                            <div class="diagram-flow-row">
+                                <div class="node-box mcu-node">
+                                    <i class="fa-solid fa-microchip"></i>
+                                    <h4>STM32U585 MCU</h4>
+                                    <p>Reads DHT11 & soil sensors. Controls physical irrigation relays.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-arrows-left-right"></i></div>
+                                <div class="node-box mpu-node">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                    <h4>Qualcomm MPU</h4>
+                                    <p>Dragonwing MPU bridges board data & cameras to local subnets.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                                <div class="node-box pc-node">
+                                    <i class="fa-solid fa-server"></i>
+                                    <h4>Snapdragon AI PC</h4>
+                                    <p>Aggregates sensor files, queries VEDAS APIs, hosts WebSocket logic.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
 
-                <!-- Card: Humidity -->
-                <div class="dashboard-card glass-card card-humidity" id="card-humidity">
-                    <div class="card-header">
-                        <span class="card-title">Air Humidity</span>
-                        <div class="icon-badge humidity-icon-bg">
-                            <i class="fa-solid fa-wind"></i>
+            <!-- PANEL 2: IoT CONTROL ROOM -->
+            <section class="tab-panel" id="panel-control-room">
+                <div class="control-room-grid">
+                    
+                    <!-- Sensor Cards -->
+                    <div class="sensor-section">
+                        <!-- Card: Soil Moisture -->
+                        <div class="dashboard-card glass-card card-soil" id="card-soil-moisture">
+                            <div class="card-header">
+                                <span class="card-title">Soil Moisture</span>
+                                <div class="icon-badge soil-icon-bg">
+                                    <i class="fa-solid fa-droplet"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="metric-display">
+                                    <span id="val-soil" class="metric-value">--</span>
+                                    <span class="metric-unit">%</span>
+                                    <span id="val-soil-raw" class="raw-metric-label">(Raw: --)</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div id="progress-soil" class="progress-bar progress-soil-color" style="width: 0%"></div>
+                                </div>
+                                <p class="card-status-desc" id="soil-desc">Awaiting reading...</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="metric-display">
-                            <span id="val-humidity" class="metric-value">--</span>
-                            <span class="metric-unit">%</span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div id="progress-humidity" class="progress-bar progress-humidity-color" style="width: 0%"></div>
-                        </div>
-                        <p class="card-status-desc" id="humidity-desc">Awaiting reading...</p>
-                    </div>
-                </div>
 
-                <!-- Card: VEDAS Satellite Telemetry -->
-                <div class="dashboard-card glass-card card-satellite" id="card-satellite-data">
-                    <div class="card-header">
-                        <span class="card-title">VEDAS Satellite Data</span>
-                        <div class="icon-badge satellite-icon-bg">
-                            <i class="fa-solid fa-satellite"></i>
+                        <!-- Card: Temperature -->
+                        <div class="dashboard-card glass-card card-temp" id="card-temperature">
+                            <div class="card-header">
+                                <span class="card-title">Temperature</span>
+                                <div class="icon-badge temp-icon-bg">
+                                    <i class="fa-solid fa-temperature-half"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="metric-display">
+                                    <span id="val-temp" class="metric-value">--</span>
+                                    <span class="metric-unit">°C</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div id="progress-temp" class="progress-bar progress-temp-color" style="width: 0%"></div>
+                                </div>
+                                <p class="card-status-desc" id="temp-desc">Awaiting reading...</p>
+                            </div>
+                        </div>
+
+                        <!-- Card: Humidity -->
+                        <div class="dashboard-card glass-card card-humidity" id="card-humidity">
+                            <div class="card-header">
+                                <span class="card-title">Air Humidity</span>
+                                <div class="icon-badge humidity-icon-bg">
+                                    <i class="fa-solid fa-wind"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="metric-display">
+                                    <span id="val-humidity" class="metric-value">--</span>
+                                    <span class="metric-unit">%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div id="progress-humidity" class="progress-bar progress-humidity-color" style="width: 0%"></div>
+                                </div>
+                                <p class="card-status-desc" id="humidity-desc">Awaiting reading...</p>
+                            </div>
+                        </div>
+
+                        <!-- Card: VEDAS Satellite Telemetry -->
+                        <div class="dashboard-card glass-card card-satellite" id="card-satellite-data">
+                            <div class="card-header">
+                                <span class="card-title">VEDAS Satellite Data</span>
+                                <div class="icon-badge satellite-icon-bg">
+                                    <i class="fa-solid fa-satellite"></i>
+                                </div>
+                            </div>
+                            <div class="card-body satellite-card-body">
+                                <div class="satellite-metric-row">
+                                    <span class="sat-label">Veg. Health (NDVI):</span>
+                                    <span id="val-sat-ndvi" class="sat-value">--</span>
+                                </div>
+                                <div class="satellite-metric-row">
+                                    <span class="sat-label">Regional Moisture:</span>
+                                    <span id="val-sat-soil" class="sat-value">--</span>
+                                </div>
+                                <div class="satellite-metric-row">
+                                    <span class="sat-label">Land Surface Temp:</span>
+                                    <span id="val-sat-temp" class="sat-value">--</span>
+                                </div>
+                                <p class="card-status-desc" id="sat-desc"><i class="fa-solid fa-circle-info"></i> Live ISRO data feed</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body satellite-card-body">
-                        <div class="satellite-metric-row">
-                            <span class="sat-label">Veg. Health (NDVI):</span>
-                            <span id="val-sat-ndvi" class="sat-value">--</span>
+
+                    <!-- Panel Layout Row: Controls & Charts -->
+                    <div class="control-room-bottom">
+                        
+                        <!-- Panel: Farm Field Manager & Pump Controller -->
+                        <div class="dashboard-card glass-card manager-card" id="card-field-manager">
+                            <div class="card-header">
+                                <div>
+                                    <span class="card-title">Farm Field Manager</span>
+                                    <p class="card-subtitle">Predefined and Custom Coordinate Selectors</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="control-row">
+                                    <div class="control-label-group">
+                                        <span class="control-label">Select Field Plot</span>
+                                    </div>
+                                    <select id="select-field" class="custom-select">
+                                        <option value="none" selected>No Field Selected</option>
+                                        <option value="noida">Qualcomm Noida HQ</option>
+                                        <option value="field_alpha">Field Alpha (Punjab)</option>
+                                        <option value="field_beta">Field Beta (Gujarat)</option>
+                                        <option value="custom">Custom GPS Coordinates</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="gps-inputs-row" id="gps-inputs-container" style="display: none;">
+                                    <div class="gps-input-group">
+                                        <label class="control-sublabel">Latitude</label>
+                                        <input type="text" id="input-lat" class="custom-num-input" value="28.5355">
+                                    </div>
+                                    <div class="gps-input-group">
+                                        <label class="control-sublabel">Longitude</label>
+                                        <input type="text" id="input-lon" class="custom-num-input" value="77.3910">
+                                    </div>
+                                    <button id="btn-update-gps" class="custom-btn">Sync GPS</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="satellite-metric-row">
-                            <span class="sat-label">Regional Moisture:</span>
-                            <span id="val-sat-soil" class="sat-value">--</span>
+
+                        <!-- Card: Pump Controller -->
+                        <div class="dashboard-card glass-card controller-card" id="card-pump-control">
+                            <div class="card-header">
+                                <div>
+                                    <span class="card-title">Water Pump Control</span>
+                                    <p class="card-subtitle">Manage pump relay thresholds & manual overrides</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="control-row">
+                                    <select id="select-crop" class="custom-select">
+                                        <option value="tomato">Tomato (40%)</option>
+                                        <option value="rice">Rice (75%)</option>
+                                        <option value="wheat">Wheat (50%)</option>
+                                        <option value="maize">Maize (35%)</option>
+                                        <option value="custom">Custom (Manual)</option>
+                                    </select>
+                                </div>
+                                <div class="control-row">
+                                    <span class="control-label">Automated Smart Mode</span>
+                                    <label class="switch-toggle">
+                                        <input type="checkbox" id="toggle-auto" checked>
+                                        <span class="slider-toggle-round"></span>
+                                    </label>
+                                </div>
+                                <div class="control-row" id="manual-control-row">
+                                    <span class="control-label">Manual Pump Override</span>
+                                    <label class="switch-toggle" id="manual-switch-wrapper">
+                                        <input type="checkbox" id="toggle-pump">
+                                        <span class="slider-toggle-round"></span>
+                                    </label>
+                                </div>
+                                <div class="threshold-slider-group" id="threshold-control-group">
+                                    <div class="slider-header">
+                                        <span class="control-label">Moisture Threshold</span>
+                                        <span class="threshold-value" id="threshold-display">30%</span>
+                                    </div>
+                                    <input type="range" min="10" max="80" value="30" class="custom-slider" id="slider-threshold">
+                                </div>
+                                <div class="system-banner" id="status-banner">
+                                    <i class="fa-solid fa-circle-info banner-icon"></i>
+                                    <span id="banner-text">Pump logic initialized in Smart Auto mode.</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="satellite-metric-row">
-                            <span class="sat-label">Land Surface Temp:</span>
-                            <span id="val-sat-temp" class="sat-value">--</span>
+
+                        <!-- Real-Time Chart -->
+                        <div class="dashboard-card glass-card chart-card">
+                            <div class="card-header">
+                                <span class="card-title">Environmental Trends</span>
+                            </div>
+                            <div class="card-body chart-wrapper">
+                                <canvas id="liveChart"></canvas>
+                            </div>
                         </div>
-                        <p class="card-status-desc" id="sat-desc"><i class="fa-solid fa-cloud-arrow-down"></i> Live ISRO data feed</p>
+
                     </div>
                 </div>
             </section>
 
-            <!-- CONTROLS & ACTUATOR PANEL -->
-            <section class="control-section">
-                <!-- Card: Farm Field Manager -->
-                <div class="dashboard-card glass-card manager-card" id="card-field-manager">
-                    <div class="card-header">
-                        <div>
-                            <span class="card-title">Farm Field Manager</span>
-                            <p class="card-subtitle">Select or configure field coordinates</p>
-                        </div>
-                        <div class="icon-badge field-icon-bg">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <!-- Preset Fields -->
-                        <div class="control-row">
-                            <div class="control-label-group">
-                                <span class="control-label">Select Field Plot</span>
-                                <p class="control-sublabel">Choose a predefined plot or set custom</p>
+            <!-- PANEL 3: SATELLITE MAP -->
+            <section class="tab-panel" id="panel-satellite-map">
+                <div class="map-container-full">
+                    <div class="dashboard-card glass-card map-card-full-screen">
+                        <div class="card-header map-header-row">
+                            <div>
+                                <span class="card-title">Interactive Farm Map (2D Satellite Overlay)</span>
+                                <p class="card-subtitle">Click to place nodes to outline your custom field. Clear/save boundary dynamically.</p>
                             </div>
-                            <select id="select-field" class="custom-select">
-                                <option value="none" selected>No Field Selected</option>
-                                <option value="noida">Qualcomm Noida HQ</option>
-                                <option value="field_alpha">Field Alpha (Punjab)</option>
-                                <option value="field_beta">Field Beta (Gujarat)</option>
-                                <option value="custom">Custom GPS Coordinates</option>
-                            </select>
-                        </div>
-
-                        <!-- Custom GPS Inputs (hidden unless Custom is selected) -->
-                        <div class="gps-inputs-row" id="gps-inputs-container" style="display: none;">
-                            <div class="gps-input-group">
-                                <label class="control-sublabel">Latitude</label>
-                                <input type="text" id="input-lat" class="custom-num-input" value="28.5355" placeholder="e.g. 28.5355 or 28°45'33\"N">
-                            </div>
-                            <div class="gps-input-group">
-                                <label class="control-sublabel">Longitude</label>
-                                <input type="text" id="input-lon" class="custom-num-input" value="77.3910" placeholder="e.g. 77.3910 or 77°12'39\"E">
-                            </div>
-                            <button id="btn-update-gps" class="custom-btn">Sync GPS</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card: Pump Controller -->
-                <div class="dashboard-card glass-card controller-card" id="card-pump-control">
-                    <div class="card-header">
-                        <div>
-                            <span class="card-title">Water Pump Control</span>
-                            <p class="card-subtitle">Manage water pump state and thresholds</p>
-                        </div>
-                        <div class="pump-visualizer" id="pump-visualizer">
-                            <i class="fa-solid fa-faucet-drip pump-icon" id="pump-icon"></i>
-                            <div class="water-drops" id="water-drops">
-                                <span class="drop d1"></span>
-                                <span class="drop d2"></span>
-                                <span class="drop d3"></span>
+                            <div class="map-btn-group">
+                                <input type="text" id="input-save-field-name" class="custom-num-input" placeholder="Field Name..." style="width: 120px; display: none; padding: 6px 10px; font-size: 0.8rem; border-radius: 8px;">
+                                <button id="btn-clear-map" class="map-btn btn-clear"><i class="fa-solid fa-trash-can"></i> Clear Boundary</button>
+                                <button id="btn-save-field" class="map-btn btn-save" style="display: none;"><i class="fa-solid fa-floppy-disk"></i> Save Field Plot</button>
+                                <button id="btn-gps-locate" class="map-btn btn-gps" title="Find current location">
+                                    <i class="fa-solid fa-location-crosshairs"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card-body">
-                        <!-- Crop Type Selector -->
-                        <div class="control-row">
-                            <div class="control-label-group">
-                                <span class="control-label">Active Crop Selection</span>
-                                <p class="control-sublabel">Tailor irrigation thresholds to specific crops</p>
-                            </div>
-                            <select id="select-crop" class="custom-select">
-                                <option value="tomato">Tomato (40%)</option>
-                                <option value="rice">Rice (75%)</option>
-                                <option value="wheat">Wheat (50%)</option>
-                                <option value="maize">Maize (35%)</option>
-                                <option value="custom">Custom (Manual)</option>
-                            </select>
-                        </div>
-
-                        <!-- Mode Switcher -->
-                        <div class="control-row">
-                            <div class="control-label-group">
-                                <span class="control-label">Automated Smart Mode</span>
-                                <p class="control-sublabel">Enable automatic relay based on soil moisture</p>
-                            </div>
-                            <label class="switch-toggle">
-                                <input type="checkbox" id="toggle-auto" checked>
-                                <span class="slider-toggle-round"></span>
-                            </label>
-                        </div>
-
-                        <!-- Manual Pump Switch (Disabled in Auto Mode) -->
-                        <div class="control-row" id="manual-control-row">
-                            <div class="control-label-group">
-                                <span class="control-label">Manual Pump Override</span>
-                                <p class="control-sublabel">Manually turn water pump relay ON or OFF</p>
-                            </div>
-                            <label class="switch-toggle" id="manual-switch-wrapper">
-                                <input type="checkbox" id="toggle-pump">
-                                <span class="slider-toggle-round"></span>
-                            </label>
-                        </div>
-
-                        <!-- Threshold Slider -->
-                        <div class="threshold-slider-group" id="threshold-control-group">
-                            <div class="slider-header">
-                                <span class="control-label">Soil Moisture Threshold</span>
-                                <span class="threshold-value" id="threshold-display">30%</span>
-                            </div>
-                            <input type="range" min="10" max="80" value="30" class="custom-slider" id="slider-threshold">
-                            <div class="slider-bounds">
-                                <span>Dry (10%)</span>
-                                <span>Wet (80%)</span>
-                            </div>
-                        </div>
-
-                        <!-- Smart Status Notification Banner -->
-                        <div class="system-banner" id="status-banner">
-                            <i class="fa-solid fa-circle-info banner-icon"></i>
-                            <span id="banner-text">Pump logic initialized in Smart Auto mode.</span>
+                        <div class="card-body map-body-full">
+                            <div id="farm-map"></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- HISTORICAL GRAPH -->
-            <section class="chart-section">
-                <div class="dashboard-card glass-card chart-card">
-                    <div class="card-header chart-header-row">
-                        <div>
-                            <span class="card-title">Real-Time Sensor Analytics</span>
-                            <p class="card-subtitle">Live environmental monitoring & trend analysis</p>
-                        </div>
-                        <div class="chart-legend-custom">
-                            <span class="legend-item"><span class="legend-dot dot-soil"></span>Soil Moisture</span>
-                            <span class="legend-item"><span class="legend-dot dot-temp"></span>Temp</span>
-                            <span class="legend-item"><span class="legend-dot dot-humidity"></span>Humidity</span>
-                        </div>
-                    </div>
-                    <div class="card-body chart-wrapper">
-                        <canvas id="liveChart" aria-label="Real-time sensor reading chart" role="img"></canvas>
-                    </div>
-                </div>
-            </section>
+            <!-- PANEL 4: AI CROP DOCTOR -->
+            <section class="tab-panel" id="panel-crop-doctor">
+                <div class="crop-doctor-container">
+                    
+                    <div class="crop-doctor-grid">
+                        
+                        <!-- Leaf Disease Uploader Card -->
+                        <div class="dashboard-card glass-card doc-upload-card">
+                            <div class="card-header">
+                                <span class="card-title">Leaf Image Analyzer</span>
+                                <p class="card-subtitle">Drag/drop leaf photos to run a local diagnostic scan</p>
+                            </div>
+                            <div class="card-body doc-body">
+                                
+                                <!-- File Drag and Drop Zone -->
+                                <div class="drop-zone" id="leaf-drop-zone">
+                                    <i class="fa-solid fa-cloud-arrow-up cloud-icon"></i>
+                                    <p class="drop-text">Drag and drop leaf image here, or <span>click to browse</span></p>
+                                    <input type="file" id="leaf-image-input" accept="image/*" style="display: none;">
+                                    
+                                    <!-- Dynamic Thumbnail -->
+                                    <img id="leaf-preview-img" style="display: none;">
+                                </div>
 
-            <!-- INTERACTIVE 2D FARM MAP -->
-            <section class="map-section">
-                <div class="dashboard-card glass-card map-card">
-                    <div class="card-header map-header-row">
-                        <div>
-                            <span class="card-title">Interactive Farm Map (2D Satellite Overlay)</span>
-                            <p class="card-subtitle">Click on the map to place boundary points. Click 3 or more points to form your custom irregular field.</p>
+                                <button id="btn-web-scan" class="custom-btn submit-scan-btn" style="display: none;">
+                                    <i class="fa-solid fa-bolt"></i> Run Web Diagnosis ⚡
+                                </button>
+
+                            </div>
                         </div>
-                        <div class="map-btn-group">
-                            <input type="text" id="input-save-field-name" class="custom-num-input" placeholder="Field Name..." style="width: 120px; display: none; padding: 6px 10px; font-size: 0.8rem; border-radius: 8px;">
-                            <button id="btn-clear-map" class="map-btn btn-clear"><i class="fa-solid fa-trash-can"></i> Clear Boundary</button>
-                            <button id="btn-save-field" class="map-btn btn-save" style="display: none;"><i class="fa-solid fa-floppy-disk"></i> Save Field Plot</button>
+
+                        <!-- Diagnostic Response Card -->
+                        <div class="dashboard-card glass-card doc-result-card">
+                            <div class="card-header">
+                                <span class="card-title">Diagnostic Results & Advisory</span>
+                                <p class="card-subtitle">Qualcomm QNN Quantized Leaf Diagnostics Feed</p>
+                            </div>
+                            <div class="card-body result-body">
+                                
+                                <!-- Placeholder Empty State -->
+                                <div class="empty-result-state" id="doc-placeholder-state">
+                                    <i class="fa-solid fa-user-doctor doctor-icon-muted"></i>
+                                    <h4>Awaiting Diagnostic Scan</h4>
+                                    <p>Please upload a leaf photograph on the left panel to execute an INT8 accelerated disease classification scan.</p>
+                                </div>
+
+                                <!-- Loading Loader -->
+                                <div class="doc-loading-container" id="doc-loading-spinner" style="display: none;">
+                                    <div class="spinner-ring"></div>
+                                    <p>Analyzing leaf sample (LiteRT Runtime)...</p>
+                                </div>
+
+                                <!-- Actual Result Details (Hidden by Default) -->
+                                <div class="scan-result-details" id="web-scan-result" style="display: none;">
+                                    <div class="result-badge-row">
+                                        <div class="diag-text-block">
+                                            <h3 id="res-disease-name">Tomato Late Blight</h3>
+                                            <span id="res-severity-status" class="severity-badge-orange">Severe Stress</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="advisory-section">
+                                        <h4><i class="fa-solid fa-language"></i> Crop Advisory (हिंदी में)</h4>
+                                        <p id="res-advisory-hindi" class="hindi-text">कृपया टमाटर के पत्तों में कवकनाशी का छिड़काव करें।</p>
+                                    </div>
+
+                                    <div class="recovery-advisory-grid">
+                                        <div class="adv-card">
+                                            <h5><i class="fa-solid fa-calendar-day"></i> Today's Actions</h5>
+                                            <ul id="res-actions-today">
+                                                <li>Isolate infected plants</li>
+                                            </ul>
+                                        </div>
+                                        <div class="adv-card">
+                                            <h5><i class="fa-solid fa-calendar-days"></i> Next 3 Days</h5>
+                                            <ul id="res-actions-mid">
+                                                <li>Spray copper-based fungicide</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="recovery-timeline-bar">
+                                        <span>Expected Recovery: <strong id="res-recovery-time">7-10 Days</strong></span>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body map-wrapper">
-                        <div id="farm-map">
-                            <!-- GPS Locate floating button -->
-                            <button id="btn-gps-locate" class="gps-locate-btn" title="Locate My Position" type="button">
-                                <i class="fa-solid fa-location-crosshairs"></i>
-                            </button>
-                        </div>
+
                     </div>
                 </div>
             </section>
 
         </main>
-
-        <footer class="app-footer">
-            <p>AgriGuardian &copy; 2026. Made for professional agricultural monitoring and smart automation systems.</p>
-        </footer>
     </div>
+
     <!-- Custom Application Logic -->
     <script src="/static/app.js?v=7"></script>
 </body>

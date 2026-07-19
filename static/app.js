@@ -1018,6 +1018,215 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Sidebar Tab Switching Logic
+    const menuItems = document.querySelectorAll('.nav-menu-item');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const activeTabTitle = document.getElementById('active-tab-title');
+    const activeTabSubtitle = document.getElementById('active-tab-subtitle');
+
+    const tabSubtitles = {
+        'showcase': 'Smart Environmental Automation & Precision Agriculture Dashboard',
+        'control-room': 'Live Microclimate Telemetry, Pump Status, & Smart Irrigation Rules',
+        'satellite-map': 'High-Resolution Regional Mapping Overlay & Saved Field Bounds',
+        'crop-doctor': 'Qualcomm QNN Quantized Leaf Diagnostics Feed & Speech Advisory'
+    };
+
+    const tabTitles = {
+        'showcase': 'Project Showcase',
+        'control-room': 'IoT Control Room',
+        'satellite-map': 'Satellite Map Analyzer',
+        'crop-doctor': 'AI Crop Doctor'
+    };
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const targetTab = item.getAttribute('data-tab');
+            
+            // Toggle active menu items
+            menuItems.forEach(mi => mi.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Toggle active panels
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+                if (panel.id === `panel-${targetTab}`) {
+                    panel.classList.add('active');
+                }
+            });
+
+            // Update header text
+            if (activeTabTitle) activeTabTitle.innerText = tabTitles[targetTab] || 'AgriGuardian';
+            if (activeTabSubtitle) activeTabSubtitle.innerText = tabSubtitles[targetTab] || '';
+
+            // Leaflet Map invalidateSize to recalculate map dimensions when tab reveals
+            if (targetTab === 'satellite-map' && map) {
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 150);
+            }
+        });
+    });
+
+    // AI Crop Doctor Drag and Drop / Upload Logic
+    const leafDropZone = document.getElementById('leaf-drop-zone');
+    const leafImageInput = document.getElementById('leaf-image-input');
+    const leafPreviewImg = document.getElementById('leaf-preview-img');
+    const btnWebScan = document.getElementById('btn-web-scan');
+    const docPlaceholderState = document.getElementById('doc-placeholder-state');
+    const docLoadingSpinner = document.getElementById('doc-loading-spinner');
+    const webScanResult = document.getElementById('web-scan-result');
+
+    // UI Result Elements
+    const resDiseaseName = document.getElementById('res-disease-name');
+    const resSeverityStatus = document.getElementById('res-severity-status');
+    const resAdvisoryHindi = document.getElementById('res-advisory-hindi');
+    const resActionsToday = document.getElementById('res-actions-today');
+    const resActionsMid = document.getElementById('res-actions-mid');
+    const resRecoveryTime = document.getElementById('res-recovery-time');
+
+    let selectedLeafFile = null;
+
+    if (leafDropZone && leafImageInput) {
+        // Open file picker on click
+        leafDropZone.addEventListener('click', () => {
+            leafImageInput.click();
+        });
+
+        // Drag/Drop Listeners
+        ['dragenter', 'dragover'].forEach(eventName => {
+            leafDropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                leafDropZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            leafDropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                leafDropZone.classList.remove('dragover');
+            }, false);
+        });
+
+        leafDropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files && files.length > 0) {
+                handleSelectedLeafFile(files[0]);
+            }
+        });
+
+        leafImageInput.addEventListener('change', (e) => {
+            if (leafImageInput.files && leafImageInput.files.length > 0) {
+                handleSelectedLeafFile(leafImageInput.files[0]);
+            }
+        });
+    }
+
+    function handleSelectedLeafFile(file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload an image file (PNG, JPG, JPEG).');
+            return;
+        }
+        selectedLeafFile = file;
+
+        // Render preview image
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            // Hide the cloud upload icon and browse texts
+            const cloudIcon = leafDropZone.querySelector('.cloud-icon');
+            const dropText = leafDropZone.querySelector('.drop-text');
+            if (cloudIcon) cloudIcon.style.display = 'none';
+            if (dropText) dropText.style.display = 'none';
+
+            // Show preview
+            leafPreviewImg.src = e.target.result;
+            leafPreviewImg.style.display = 'block';
+            
+            // Show action scan button
+            btnWebScan.style.display = 'inline-flex';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    if (btnWebScan) {
+        btnWebScan.addEventListener('click', async () => {
+            if (!selectedLeafFile) return;
+
+            // Update UI to loading state
+            docPlaceholderState.style.display = 'none';
+            webScanResult.style.display = 'none';
+            docLoadingSpinner.style.display = 'flex';
+            btnWebScan.disabled = true;
+
+            const formData = new FormData();
+            formData.append('image', selectedLeafFile);
+
+            try {
+                const response = await fetch('/api/leaf/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Detection endpoint returned HTTP error ' + response.status);
+                }
+
+                const result = await response.json();
+                console.log('Detection response:', result);
+
+                // Populate Diagnostic Details
+                let disease = result.disease || 'healthy';
+                let severity = 'Healthy Crop';
+                let isHealthy = disease.toLowerCase().includes('healthy');
+
+                let advisory = result.advisory || 'आपकी पत्ती का चित्र स्वस्थ प्रतीत होता है।';
+                let actionsToday = ['नियमित पानी देते रहें', 'खेत की निगरानी करें'];
+                let actionsMid = ['बेहतर धूप का प्रबंध करें'];
+                let recovery = 'N/A';
+
+                if (!isHealthy) {
+                    severity = 'Infection Detected';
+                    actionsToday = ['रोगग्रस्त पत्तियों को तुरंत अलग करें', 'प्रभावित पौधों की कटाई करें'];
+                    actionsMid = ['तांबे युक्त कवकनाशी (Fungicide) का छिड़काव करें', 'सिंचाई को अस्थायी रूप से कम करें'];
+                    recovery = '7-14 Days';
+                }
+
+                if (result.status === 'low_confidence') {
+                    disease = (result.top_predictions && result.top_predictions[0] && result.top_predictions[0].disease) || 'Unknown';
+                    severity = 'Low Confidence Scan ⚠️';
+                    advisory = 'पत्ती का चित्र स्पष्ट नहीं है। कृपया बेहतर रोशनी में साफ़ तस्वीर खींचकर पुनः अपलोड करें।';
+                }
+
+                // Render in DOM
+                resDiseaseName.innerText = disease.replace(/_/g, ' ').toUpperCase();
+                resSeverityStatus.innerText = severity;
+                
+                // Color formatting inline
+                resSeverityStatus.style.background = isHealthy ? 'rgba(52, 211, 153, 0.12)' : 'rgba(251, 113, 133, 0.12)';
+                resSeverityStatus.style.borderColor = isHealthy ? 'rgba(52, 211, 153, 0.25)' : 'rgba(251, 113, 133, 0.25)';
+                resSeverityStatus.style.color = isHealthy ? 'var(--accent-pump)' : 'var(--accent-temp)';
+                
+                resAdvisoryHindi.innerText = advisory;
+                
+                // Render actions
+                resActionsToday.innerHTML = actionsToday.map(act => `<li>${act}</li>`).join('');
+                resActionsMid.innerHTML = actionsMid.map(act => `<li>${act}</li>`).join('');
+                resRecoveryTime.innerText = recovery;
+
+                // Toggle visibility
+                docLoadingSpinner.style.display = 'none';
+                webScanResult.style.display = 'flex';
+            } catch (err) {
+                console.error(err);
+                docLoadingSpinner.style.display = 'none';
+                docPlaceholderState.style.display = 'flex';
+                alert('Web diagnostic scan failed: ' + err.message);
+            } finally {
+                btnWebScan.disabled = false;
+            }
+        });
+    }
+
     const handleGpsKeyPress = (e) => {
         if (e.key === 'Enter') {
             btnUpdateGps.click();
