@@ -725,12 +725,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 5. Pump Visualizer state
-        if (data.pump_status) {
-            pumpVisualizer.classList.add('pump-active-state');
-            pumpIcon.classList.add('pump-running-anim');
-        } else {
-            pumpVisualizer.classList.remove('pump-active-state');
-            pumpIcon.classList.remove('pump-running-anim');
+        if (pumpVisualizer && pumpIcon) {
+            if (data.pump_status) {
+                pumpVisualizer.classList.add('pump-active-state');
+                pumpIcon.classList.add('pump-running-anim');
+            } else {
+                pumpVisualizer.classList.remove('pump-active-state');
+                pumpIcon.classList.remove('pump-running-anim');
+            }
         }
 
         // 5.5 Crop Type Sync
@@ -739,17 +741,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 6. Controls Sync
-        toggleAuto.checked = data.auto_mode;
+        if (toggleAuto) {
+            toggleAuto.checked = data.auto_mode;
+        }
         
         // Manual override switch is disabled if Auto mode is active
-        if (data.auto_mode) {
-            togglePump.disabled = true;
-            manualSwitchWrapper.classList.add('switch-disabled');
-            togglePump.checked = data.pump_status;
-        } else {
-            togglePump.disabled = false;
-            manualSwitchWrapper.classList.remove('switch-disabled');
-            togglePump.checked = data.pump_status;
+        if (togglePump) {
+            if (data.auto_mode) {
+                togglePump.disabled = true;
+                if (manualSwitchWrapper) manualSwitchWrapper.classList.add('switch-disabled');
+                togglePump.checked = data.pump_status;
+            } else {
+                togglePump.disabled = false;
+                if (manualSwitchWrapper) manualSwitchWrapper.classList.remove('switch-disabled');
+                togglePump.checked = data.pump_status;
+            }
         }
 
         // Soil Threshold Slider
@@ -874,17 +880,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 7. Info Banner Text
-        if (data.auto_mode) {
-            if (data.pump_status) {
-                bannerText.innerText = `Watering automatically. Soil is at ${data.soil_moisture}% (under threshold of ${data.soil_threshold}%).`;
+        if (bannerText) {
+            if (data.auto_mode) {
+                if (data.pump_status) {
+                    bannerText.innerText = `Watering automatically. Soil is at ${data.soil_moisture}% (under threshold of ${data.soil_threshold}%).`;
+                } else {
+                    bannerText.innerText = `Auto irrigation active. Will trigger water pump if moisture drops below ${data.soil_threshold}%.`;
+                }
             } else {
-                bannerText.innerText = `Auto irrigation active. Will trigger water pump if moisture drops below ${data.soil_threshold}%.`;
-            }
-        } else {
-            if (data.pump_status) {
-                bannerText.innerText = "Pump overrides: Relay forced ON manually via Dashboard override.";
-            } else {
-                bannerText.innerText = "Pump overrides: Relay forced OFF manually. Auto control deactivated.";
+                if (data.pump_status) {
+                    bannerText.innerText = "Pump overrides: Relay forced ON manually via Dashboard override.";
+                } else {
+                    bannerText.innerText = "Pump overrides: Relay forced OFF manually. Auto control deactivated.";
+                }
             }
         }
 
@@ -914,125 +922,140 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // UI Input Event Listeners
-    toggleAuto.addEventListener('change', () => {
-        const isAuto = toggleAuto.checked;
-        sendControlCommand('set_auto', isAuto);
-    });
+    if (toggleAuto) {
+        toggleAuto.addEventListener('change', () => {
+            const isAuto = toggleAuto.checked;
+            sendControlCommand('set_auto', isAuto);
+        });
+    }
 
-    togglePump.addEventListener('change', () => {
-        const isPumpOn = togglePump.checked;
-        sendControlCommand('set_pump', isPumpOn);
-    });
+    if (togglePump) {
+        togglePump.addEventListener('change', () => {
+            const isPumpOn = togglePump.checked;
+            sendControlCommand('set_pump', isPumpOn);
+        });
+    }
 
-    sliderThreshold.addEventListener('input', () => {
-        const val = parseInt(sliderThreshold.value);
-        thresholdDisplay.innerText = `${val}%`;
-    });
+    if (sliderThreshold) {
+        sliderThreshold.addEventListener('input', () => {
+            const val = parseInt(sliderThreshold.value);
+            if (thresholdDisplay) thresholdDisplay.innerText = `${val}%`;
+        });
 
-    sliderThreshold.addEventListener('change', () => {
-        const val = parseInt(sliderThreshold.value);
-        sendControlCommand('set_threshold', val);
-    });
+        sliderThreshold.addEventListener('change', () => {
+            const val = parseInt(sliderThreshold.value);
+            sendControlCommand('set_threshold', val);
+        });
+    }
 
-    selectCrop.addEventListener('change', () => {
-        const crop = selectCrop.value;
-        sendControlCommand('set_crop', crop);
-        
-        // Auto-change threshold based on standard agricultural values
-        let threshold = 30;
-        if (crop === 'tomato') threshold = 40;
-        else if (crop === 'rice') threshold = 75;
-        else if (crop === 'wheat') threshold = 50;
-        else if (crop === 'maize') threshold = 35;
-        else return; // custom
-        
-        sliderThreshold.value = threshold;
-        thresholdDisplay.innerText = `${threshold}%`;
-        sendControlCommand('set_threshold', threshold);
-    });
+    if (selectCrop) {
+        selectCrop.addEventListener('change', () => {
+            const crop = selectCrop.value;
+            sendControlCommand('set_crop', crop);
+            
+            // Auto-change threshold based on standard agricultural values
+            let threshold = 30;
+            if (crop === 'tomato') threshold = 40;
+            else if (crop === 'rice') threshold = 75;
+            else if (crop === 'wheat') threshold = 50;
+            else if (crop === 'maize') threshold = 35;
+            else return; // custom
+            
+            if (sliderThreshold) sliderThreshold.value = threshold;
+            if (thresholdDisplay) thresholdDisplay.innerText = `${threshold}%`;
+            sendControlCommand('set_threshold', threshold);
+        });
+    }
 
-    selectField.addEventListener('change', () => {
-        const field = selectField.value;
-        let lat = 28.5355;
-        let lon = 77.3910;
-        
-        if (field === 'none') {
-            gpsInputsContainer.style.display = 'none';
-            inputLat.value = '';
-            inputLon.value = '';
-            clearBoundary(true);
-            sendControlCommand('set_field', { field: 'none', lat: null, lon: null });
-            return;
-        } else if (field === 'noida') {
-            lat = 28.5355; lon = 77.3910;
-            gpsInputsContainer.style.display = 'none';
-        } else if (field === 'field_alpha') {
-            lat = 30.9010; lon = 75.8573;
-            gpsInputsContainer.style.display = 'none';
-        } else if (field === 'field_beta') {
-            lat = 22.3072; lon = 73.1812;
-            gpsInputsContainer.style.display = 'none';
-        } else if (field === 'custom') {
-            gpsInputsContainer.style.display = 'flex';
-            return; // Wait for the user to type and click sync
-        } else {
-            const savedField = cachedSavedFields.find(f => f.name === field);
-            if (savedField) {
-                lat = savedField.latitude;
-                lon = savedField.longitude;
+    if (selectField) {
+        selectField.addEventListener('change', () => {
+            const field = selectField.value;
+            let lat = 28.5355;
+            let lon = 77.3910;
+            
+            if (field === 'none') {
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'none';
+                if (inputLat) inputLat.value = '';
+                if (inputLon) inputLon.value = '';
+                clearBoundary(true);
+                sendControlCommand('set_field', { field: 'none', lat: null, lon: null });
+                return;
+            } else if (field === 'noida') {
+                lat = 28.5355; lon = 77.3910;
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'none';
+            } else if (field === 'field_alpha') {
+                lat = 30.9010; lon = 75.8573;
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'none';
+            } else if (field === 'field_beta') {
+                lat = 22.3072; lon = 73.1812;
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'none';
+            } else if (field === 'custom') {
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'flex';
+                return; // Wait for the user to type and click sync
+            } else {
+                const savedField = cachedSavedFields.find(f => f.name === field);
+                if (savedField) {
+                    lat = savedField.latitude;
+                    lon = savedField.longitude;
+                }
+                if (gpsInputsContainer) gpsInputsContainer.style.display = 'none';
             }
-            gpsInputsContainer.style.display = 'none';
-        }
-        
-        inputLat.value = lat;
-        inputLon.value = lon;
-        sendControlCommand('set_field', { field, lat, lon });
-    });
+            
+            if (inputLat) inputLat.value = lat;
+            if (inputLon) inputLon.value = lon;
+            sendControlCommand('set_field', { field, lat, lon });
+        });
+    }
 
-    btnUpdateGps.addEventListener('click', () => {
-        const lat = parseCoordinateToDecimal(inputLat.value);
-        const lon = parseCoordinateToDecimal(inputLon.value);
-        if (!isNaN(lat) && !isNaN(lon)) {
-            // Draw default bounding square around new coordinates and pan there
-            drawDefaultCustomField(lat, lon);
-            map.flyTo([lat, lon], 16);
-            sendControlCommand('set_field', { field: 'custom', lat, lon });
-        } else {
-            alert('Invalid coordinate format. Please use decimal (28.759) or DMS (28°45\'33"N) format.');
-        }
-    });
+    if (btnUpdateGps) {
+        btnUpdateGps.addEventListener('click', () => {
+            if (!inputLat || !inputLon) return;
+            const lat = parseCoordinateToDecimal(inputLat.value);
+            const lon = parseCoordinateToDecimal(inputLon.value);
+            if (!isNaN(lat) && !isNaN(lon)) {
+                // Draw default bounding square around new coordinates and pan there
+                drawDefaultCustomField(lat, lon);
+                if (map) map.flyTo([lat, lon], 16);
+                sendControlCommand('set_field', { field: 'custom', lat, lon });
+            } else {
+                alert('Invalid coordinate format. Please use decimal (28.759) or DMS (28°45\'33"N) format.');
+            }
+        });
+    }
 
     // Auto-split combined coordinate values (e.g. pasted directly into the latitude field)
-    inputLat.addEventListener('input', () => {
-        let val = inputLat.value.trim();
-        
-        // Normalize curly quotes, primes, smart quotes to standard ' and "
-        val = val.replace(/[\u201C\u201D\u2033””]/g, '"')
-                 .replace(/[\u2018\u2019\u2032’’]/g, "'");
-        
-        // 1. Check if it's standard decimal degrees separated by comma: e.g. "28.75925, 77.21083"
-        const commaParts = val.split(',');
-        if (commaParts.length === 2) {
-            const parsedLat = parseFloat(commaParts[0].trim());
-            const parsedLon = parseFloat(commaParts[1].trim());
-            if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
-                inputLat.value = parsedLat;
-                inputLon.value = parsedLon;
-                return;
+    if (inputLat) {
+        inputLat.addEventListener('input', () => {
+            let val = inputLat.value.trim();
+            
+            // Normalize curly quotes, primes, smart quotes to standard ' and "
+            val = val.replace(/[\u201C\u201D\u2033””]/g, '"')
+                     .replace(/[\u2018\u2019\u2032’’]/g, "'");
+            
+            // 1. Check if it's standard decimal degrees separated by comma: e.g. "28.75925, 77.21083"
+            const commaParts = val.split(',');
+            if (commaParts.length === 2) {
+                const parsedLat = parseFloat(commaParts[0].trim());
+                const parsedLon = parseFloat(commaParts[1].trim());
+                if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
+                    inputLat.value = parsedLat;
+                    if (inputLon) inputLon.value = parsedLon;
+                    return;
+                }
             }
-        }
-        
-        // 2. Check if it's DMS coordinates separated by space: e.g. "28°45'33.3"N 77°12'39.0"E"
-        const dmsParts = val.match(/([0-9\s°'".dms-]+[NSEWnsew])/g);
-        if (dmsParts && dmsParts.length === 2) {
-            const latVal = parseCoordinateToDecimal(dmsParts[0]);
-            const lonVal = parseCoordinateToDecimal(dmsParts[1]);
-            if (!isNaN(latVal) && !isNaN(lonVal)) {
-                inputLat.value = latVal.toFixed(6);
-                inputLon.value = lonVal.toFixed(6);
+            
+            // 2. Check if it's DMS coordinates separated by space: e.g. "28°45'33.3"N 77°12'39.0"E"
+            const dmsParts = val.match(/([0-9\s°'".dms-]+[NSEWnsew])/g);
+            if (dmsParts && dmsParts.length === 2) {
+                const latVal = parseCoordinateToDecimal(dmsParts[0]);
+                const lonVal = parseCoordinateToDecimal(dmsParts[1]);
+                if (!isNaN(latVal) && !isNaN(lonVal)) {
+                    inputLat.value = latVal.toFixed(6);
+                    if (inputLon) inputLon.value = lonVal.toFixed(6);
+                }
             }
-        }
-    });
+        });
+    }
 
     // Sidebar Tab Switching Logic
     const menuItems = document.querySelectorAll('.nav-menu-item');
@@ -1244,12 +1267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const handleGpsKeyPress = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && btnUpdateGps) {
             btnUpdateGps.click();
         }
     };
-    inputLat.addEventListener('keypress', handleGpsKeyPress);
-    inputLon.addEventListener('keypress', handleGpsKeyPress);
+    if (inputLat) inputLat.addEventListener('keypress', handleGpsKeyPress);
+    if (inputLon) inputLon.addEventListener('keypress', handleGpsKeyPress);
 
     function sendControlCommand(action, value) {
         if (ws && ws.readyState === WebSocket.OPEN) {
