@@ -939,19 +939,29 @@ input:checked + .slider-toggle-round:before {
     display: none !important;
 }
 
+.mobile-map-only html,
+.mobile-map-only body {
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #121A12 !important;
+    overflow: hidden !important;
+}
+
 .mobile-map-only .app-sidebar-layout {
     display: block !important;
     padding: 0 !important;
     margin: 0 !important;
-    height: 100vh !important;
-    width: 100vw !important;
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .mobile-map-only .main-content-wrapper {
     margin-left: 0 !important;
     padding: 0 !important;
     width: 100% !important;
-    height: 100vh !important;
+    height: 100% !important;
 }
 
 .mobile-map-only .tab-panel {
@@ -960,11 +970,11 @@ input:checked + .slider-toggle-round:before {
 
 .mobile-map-only .tab-panel#panel-satellite-map {
     display: block !important;
-    height: 100vh !important;
+    height: 100% !important;
 }
 
 .mobile-map-only .map-container-full {
-    height: 100vh !important;
+    height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
 }
@@ -974,7 +984,7 @@ input:checked + .slider-toggle-round:before {
     border-radius: 0 !important;
     box-shadow: none !important;
     background: #121A12 !important; /* Matches app background */
-    height: 100vh !important;
+    height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     margin: 0 !important;
@@ -985,20 +995,13 @@ input:checked + .slider-toggle-round:before {
     flex: 1 !important;
     padding: 0 !important;
     margin: 0 !important;
-    height: calc(100vh - 65px) !important;
+    height: 100% !important;
 }
 
 .mobile-map-only #farm-map {
     height: 100% !important;
     width: 100% !important;
     border-radius: 0 !important;
-}
-
-.mobile-map-only body {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #121A12 !important; /* Matches React Native app background */
-    overflow: hidden !important;
 }
 
 .mobile-map-only .card-header.map-header-row {
