@@ -918,7 +918,7 @@ export default function App() {
     if (!host.includes(':')) {
       host = `${host}:8000`; // append port if not present
     }
-    const mapUrl = `http://${host}/?mode=map&v=20`;
+    const mapUrl = `http://${host}/?mode=map&v=21`;
     
     return (
       <View style={{ flex: 1, backgroundColor: Colors.background }}>

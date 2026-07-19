@@ -713,9 +713,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4.5 VEDAS Satellite Card
         if (valSatNdvi && data.vegetation_ndvi != null) {
-            valSatNdvi.innerText = data.vegetation_ndvi.toFixed(2);
-            // Recolor polygon on the map based on the updated NDVI value
-            if (farmPolygon && boundaryPoints.length >= 3) {
+            const newNdviText = data.vegetation_ndvi.toFixed(2);
+            const ndviChanged = valSatNdvi.innerText !== newNdviText;
+            valSatNdvi.innerText = newNdviText;
+            // Recolor polygon on the map based on the updated NDVI value ONLY if it actually changed
+            if (farmPolygon && boundaryPoints.length >= 3 && ndviChanged) {
                 drawPolygon(false);
             }
         } else if (valSatNdvi) {
