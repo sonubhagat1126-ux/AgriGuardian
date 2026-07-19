@@ -939,7 +939,7 @@ input:checked + .slider-toggle-round:before {
     display: none !important;
 }
 
-.mobile-map-only html,
+html.mobile-map-only,
 .mobile-map-only body {
     height: 100% !important;
     width: 100% !important;
