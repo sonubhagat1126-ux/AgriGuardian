@@ -370,7 +370,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnClearMap) {
-        btnClearMap.addEventListener('click', () => clearBoundary(true));
+        btnClearMap.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearBoundary(true);
+        });
+    }
+
+    // Prevent interactions with the control card from propagating to the Leaflet map below it
+    const mapHeaderRow = document.querySelector('.card-header.map-header-row');
+    if (mapHeaderRow) {
+        ['click', 'mousedown', 'touchstart', 'dblclick'].forEach(evtName => {
+            mapHeaderRow.addEventListener(evtName, (e) => e.stopPropagation());
+        });
     }
 
     function showToast(message) {
@@ -413,7 +424,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnSaveField) {
-        btnSaveField.addEventListener('click', () => {
+        btnSaveField.addEventListener('click', (e) => {
+            e.stopPropagation();
             if (boundaryPoints.length < 3) return;
             
             const cropVal = selectCrop.value;
