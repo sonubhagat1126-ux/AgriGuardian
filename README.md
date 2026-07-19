@@ -69,7 +69,7 @@ graph TD
 
 ## 🛰️ ISRO VEDAS API Integration
 
-The system queries the **ISRO VEDAS API** (`vedas.sac.gov.in`) using the authorized credential `WeOvIR6Q3SjfMdQijY-Sfg` to fetch macro-level earth observation data. 
+The system queries the **ISRO VEDAS API** (`vedas.sac.gov.in`) using the authorized credential `WeOvIxxxxxxxxxxxx` to fetch macro-level earth observation data. 
 
 ```
                                       [ VEDAS API ]
