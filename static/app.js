@@ -805,18 +805,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedField = data.saved_fields ? data.saved_fields.find(f => f.name === data.selected_field) : null;
             if (data.selected_field === 'noida') {
                 const pts = [[28.5360, 77.3905], [28.5360, 77.3915], [28.5350, 77.3915], [28.5350, 77.3905]];
-                pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
             } else if (data.selected_field === 'field_alpha') {
                 const pts = [[30.9015, 75.8568], [30.9015, 75.8578], [30.9005, 75.8578], [30.9005, 75.8568]];
-                pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
             } else if (data.selected_field === 'field_beta') {
                 const pts = [[22.3077, 73.1807], [22.3077, 73.1817], [22.3067, 73.1817], [22.3067, 73.1807]];
-                pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
             } else if (data.selected_field === 'custom' && data.custom_boundary && data.custom_boundary.length > 0) {
-                data.custom_boundary.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === data.custom_boundary.length - 1));
+                data.custom_boundary.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
             } else if (savedField) {
                 if (savedField.boundary && savedField.boundary.length > 0) {
-                    savedField.boundary.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === savedField.boundary.length - 1));
+                    savedField.boundary.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                 } else if (savedField.latitude && savedField.longitude) {
                     addBoundaryNode(savedField.latitude, savedField.longitude, false);
                 }
@@ -837,14 +837,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Check if custom boundary changed in real-time (e.g., node added via phone app)
+            // Use small tolerance threshold to avoid precision float mismatches
             let customBoundaryChanged = false;
             if (data.selected_field === 'custom' && data.custom_boundary) {
                 if (data.custom_boundary.length !== boundaryPoints.length) {
                     customBoundaryChanged = true;
                 } else {
                     for (let i = 0; i < data.custom_boundary.length; i++) {
-                        if (data.custom_boundary[i][0] !== boundaryPoints[i][0] || 
-                            data.custom_boundary[i][1] !== boundaryPoints[i][1]) {
+                        const ptServer = data.custom_boundary[i];
+                        const ptLocal = boundaryPoints[i];
+                        if (Math.abs(ptServer[0] - ptLocal[0]) > 1e-7 || Math.abs(ptServer[1] - ptLocal[1]) > 1e-7) {
                             customBoundaryChanged = true;
                             break;
                         }
@@ -860,18 +862,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const savedField = data.saved_fields ? data.saved_fields.find(f => f.name === data.selected_field) : null;
                 if (data.selected_field === 'noida') {
                     const pts = [[28.5360, 77.3905], [28.5360, 77.3915], [28.5350, 77.3915], [28.5350, 77.3905]];
-                    pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                    pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                 } else if (data.selected_field === 'field_alpha') {
                     const pts = [[30.9015, 75.8568], [30.9015, 75.8578], [30.9005, 75.8578], [30.9005, 75.8568]];
-                    pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                    pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                 } else if (data.selected_field === 'field_beta') {
                     const pts = [[22.3077, 73.1807], [22.3077, 73.1817], [22.3067, 73.1817], [22.3067, 73.1807]];
-                    pts.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === pts.length - 1));
+                    pts.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                 } else if (data.selected_field === 'custom' && data.custom_boundary && data.custom_boundary.length > 0) {
-                    data.custom_boundary.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === data.custom_boundary.length - 1));
+                    data.custom_boundary.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                 } else if (savedField) {
                     if (savedField.boundary && savedField.boundary.length > 0) {
-                        savedField.boundary.forEach((pt, idx) => addBoundaryNode(pt[0], pt[1], idx === savedField.boundary.length - 1));
+                        savedField.boundary.forEach(pt => addBoundaryNode(pt[0], pt[1], false));
                     } else if (savedField.latitude && savedField.longitude) {
                         addBoundaryNode(savedField.latitude, savedField.longitude, false);
                     }
